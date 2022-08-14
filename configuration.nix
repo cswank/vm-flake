@@ -8,6 +8,7 @@
   imports =
     [ # Include the results of the hardware scan.
       ./hardware-configuration.nix
+      ./sway.nix
     ];
 
   # Use the systemd-boot EFI boot loader.
@@ -15,18 +16,7 @@
   boot.loader.efi.canTouchEfiVariables = true;
 
   networking.hostName = "yavin"; # Define your hostname.
-  # Pick only one of the below networking options.
-  # networking.wireless.enable = true;  # Enables wireless support via wpa_supplicant.
-  # networking.networkmanager.enable = true;  # Easiest to use and most distros use this by default.
-
-  # Set your time zone.
   time.timeZone = "America/Denver";
-
-  # Configure network proxy if necessary
-  # networking.proxy.default = "http://user:password@proxy:port/";
-  # networking.proxy.noProxy = "127.0.0.1,localhost,internal.domain";
-
-  # Select internationalisation properties.
   i18n.defaultLocale = "en_US.UTF-8";
   console = {
     font = "Lat2-Terminus16";
@@ -34,27 +24,6 @@
     #useXkbConfig = true; # use xkbOptions in tty.
   };
 
-  # Enable the X11 windowing system.
-  # services.xserver.enable = true;  
-
-  # Configure keymap in X11
-  # services.xserver.layout = "us";
-  # services.xserver.xkbOptions = {
-  #   "eurosign:e";
-  #   "caps:escape" # map caps to escape.
-  # };
-
-  # Enable CUPS to print documents.
-  # services.printing.enable = true;
-
-  # Enable sound.
-  # sound.enable = true;
-  # hardware.pulseaudio.enable = true;
-
-  # Enable touchpad support (enabled default in most desktopManager).
-  # services.xserver.libinput.enable = true;
-
-  # Define a user account. Don't forget to set a password with ‘passwd’.
   users.users.craig = {
     isNormalUser = true;
     extraGroups = [ "wheel" ]; # Enable ‘sudo’ for the user.
@@ -63,48 +32,45 @@
      ];
   };
 
-  # List packages installed in system profile. To search, run:
-  # $ nix search wget
   environment.systemPackages = with pkgs; [
     git
-  #   wget
   ];
 
-  wayland.windowManager.sway = {
-      enable = true;
-      config = null;
-      #extraConfig = builtins.readFile "/home/anon/.config/sway/.config";
+  # wayland.windowManager.sway = {
+  #     enable = true;
+  #     config = null;
+  #     #extraConfig = builtins.readFile "/home/anon/.config/sway/.config";
 
-      extraSessionCommands = ''
-      export XDG_CURRENT_DESKTOP=sway
-      export XDG_SESSION_TYPE=wayland
-      export SDL_VIDEODRIVER=wayland
-      # needs qt5.qtwayland in systemPackages
-      export QT_QPA_PLATFORM=wayland
-      export QT_WAYLAND_DISABLE_WINDOWDECORATION="1"
-      export QT_AUTO_SCREEN_SCALE_FACTOR=0
-      export WLR_DRM_NO_ATOMIC=1 sway
-      export GDK_SCALE=1
-      export MOZ_ENABLE_WAYLAND=1
-      '';
-    };
+  #     extraSessionCommands = ''
+  #     export XDG_CURRENT_DESKTOP=sway
+  #     export XDG_SESSION_TYPE=wayland
+  #     export SDL_VIDEODRIVER=wayland
+  #     # needs qt5.qtwayland in systemPackages
+  #     export QT_QPA_PLATFORM=wayland
+  #     export QT_WAYLAND_DISABLE_WINDOWDECORATION="1"
+  #     export QT_AUTO_SCREEN_SCALE_FACTOR=0
+  #     export WLR_DRM_NO_ATOMIC=1 sway
+  #     export GDK_SCALE=1
+  #     export MOZ_ENABLE_WAYLAND=1
+  #     '';
+  #   };
 
-  programs = {
-    sway.enable = true;                            #Implements sway wm with sandard config and Wayland - a replacement for X.  
-    sway.extraPackages = with pkgs; [
-      xwayland     # To Support X applications
-      dmenu        # Program search in Swaybar
-      wl-clipboard # Wayland clipboard
-      swaylock     # Screen lock in Wayland world
-      swayidle     # Lock sceen afer say 30 minutes of inacivity
-      termite      # Nice terminal. I bind it to Mod+enter in sawy config
-      light        # To control the brighness - works in tty as well as Wayland
-      mako         # Wayland Notifications
-      waybar       # Make sway look like a Desktop with configurable top bar
-      grim         # Wayland compatible screenshots
-      xdg_utils    # Open applicaions with "xdg_open" in wayland too.
-    ];
-  };
+  # programs = {
+  #   sway.enable = true;                            #Implements sway wm with sandard config and Wayland - a replacement for X.  
+  #   sway.extraPackages = with pkgs; [
+  #     xwayland     # To Support X applications
+  #     dmenu        # Program search in Swaybar
+  #     wl-clipboard # Wayland clipboard
+  #     swaylock     # Screen lock in Wayland world
+  #     swayidle     # Lock sceen afer say 30 minutes of inacivity
+  #     termite      # Nice terminal. I bind it to Mod+enter in sawy config
+  #     light        # To control the brighness - works in tty as well as Wayland
+  #     mako         # Wayland Notifications
+  #     waybar       # Make sway look like a Desktop with configurable top bar
+  #     grim         # Wayland compatible screenshots
+  #     xdg_utils    # Open applicaions with "xdg_open" in wayland too.
+  #   ];
+  # };
 
   # Some programs need SUID wrappers, can be configured further or are
   # started in user sessions.
