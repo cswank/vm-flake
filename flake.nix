@@ -63,6 +63,7 @@
               inherit inputs;
             };
             modules = [
+              ./configuration.nix
               #./nixpkgs/nixos/users/chris-minimal.nix
               home-manager.nixosModules.home-manager
               {
