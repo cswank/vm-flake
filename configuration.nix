@@ -70,6 +70,25 @@
   #   wget
   ];
 
+  wayland.windowManager.sway = {
+      enable = true;
+      config = null;
+      #extraConfig = builtins.readFile "/home/anon/.config/sway/.config";
+
+      extraSessionCommands = ''
+      export XDG_CURRENT_DESKTOP=sway
+      export XDG_SESSION_TYPE=wayland
+      export SDL_VIDEODRIVER=wayland
+      # needs qt5.qtwayland in systemPackages
+      export QT_QPA_PLATFORM=wayland
+      export QT_WAYLAND_DISABLE_WINDOWDECORATION="1"
+      export QT_AUTO_SCREEN_SCALE_FACTOR=0
+      export WLR_DRM_NO_ATOMIC=1 sway
+      export GDK_SCALE=1
+      export MOZ_ENABLE_WAYLAND=1
+      '';
+    };
+
   programs = {
     sway.enable = true;                            #Implements sway wm with sandard config and Wayland - a replacement for X.  
     sway.extraPackages = with pkgs; [
