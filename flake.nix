@@ -56,7 +56,7 @@
           wayland = wayland-overlay.overlay;
         };
         nixosConfigurations = {
-          vm = nixpkgs.lib.nixosSystem {
+          yavin = nixpkgs.lib.nixosSystem {
             system = system.aarch64-linux;
             specialArgs = {
               inherit (self.outputs) overlays;
