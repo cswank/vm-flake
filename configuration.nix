@@ -70,6 +70,23 @@
   #   wget
   ];
 
+  programs = {
+    sway.enable = true;                            #Implements sway wm with sandard config and Wayland - a replacement for X.  
+    sway.extraPackages = with pkgs; [
+      xwayland     # To Support X applications
+      dmenu        # Program search in Swaybar
+      wl-clipboard # Wayland clipboard
+      swaylock     # Screen lock in Wayland world
+      swayidle     # Lock sceen afer say 30 minutes of inacivity
+      termite      # Nice terminal. I bind it to Mod+enter in sawy config
+      light        # To control the brighness - works in tty as well as Wayland
+      mako         # Wayland Notifications
+      waybar       # Make sway look like a Desktop with configurable top bar
+      grim         # Wayland compatible screenshots
+      xdg_utils    # Open applicaions with "xdg_open" in wayland too.
+    ];
+  };
+
   # Some programs need SUID wrappers, can be configured further or are
   # started in user sessions.
   # programs.mtr.enable = true;
